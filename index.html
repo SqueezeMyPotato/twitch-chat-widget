@@ -22,6 +22,7 @@
             overflow: hidden;
             display: flex;
             flex-direction: column;
+            justify-content: flex-start; /* Ensures messages appear from top down */
         }
         .chat-message {
             background: transparent;
@@ -32,7 +33,7 @@
             position: relative;
             display: flex;
             align-items: center;
-            animation: fadeIn 0.5s ease-in-out, fadeOut 5s ease-in-out 4s forwards;
+            animation: fadeIn 0.5s ease-in-out;
         }
         .chat-message::before {
             content: "";
@@ -92,9 +93,17 @@
             chatMessage.innerHTML = `<strong>${username}:</strong> ${message}`;
             chatContainer.appendChild(chatMessage);
             
+            // Set timeout for fade-out and removal
+            setTimeout(() => {
+                chatMessage.style.animation = "fadeOut 1s ease-in-out forwards";
+                setTimeout(() => {
+                    chatMessage.remove();
+                }, 1000); // Ensure it removes after fade-out
+            }, 5000);
+            
             // Remove the oldest message if over limit
             if (chatContainer.children.length > 8) {
-                chatContainer.removeChild(chatContainer.lastChild);
+                chatContainer.removeChild(chatContainer.firstChild);
             }
         }
     </script>
