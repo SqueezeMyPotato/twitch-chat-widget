@@ -21,7 +21,7 @@
             max-height: 500px;
             overflow: hidden;
             display: flex;
-            flex-direction: column-reverse;
+            flex-direction: column;
         }
         .chat-message {
             background: transparent;
@@ -91,8 +91,10 @@
             chatMessage.classList.add("chat-message");
             chatMessage.innerHTML = `<strong>${username}:</strong> ${message}`;
             chatContainer.appendChild(chatMessage);
+            
+            // Remove the oldest message if over limit
             if (chatContainer.children.length > 8) {
-                chatContainer.removeChild(chatContainer.children[0]);
+                chatContainer.removeChild(chatContainer.lastChild);
             }
         }
     </script>
